@@ -16,7 +16,10 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        lowercase: true,
+        match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address'],
     },
     password: {
         type: String,
@@ -57,7 +60,7 @@ const phoneValidation = () => {
     .isLength({ min: 10, max: 10 }).withMessage('Phone number must be 10 digits')
 }
 
-app.post('/create', nameValidation(), emailValidation(), passwordValidation(), phoneValidation(), async (req, res) => {
+app.post('/create', nameValidation(), passwordValidation(), phoneValidation(), async (req, res) => {
     try {
         const result = validationResult(req);
         if (!result.isEmpty()) {
