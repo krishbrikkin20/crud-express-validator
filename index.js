@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 const { query, matchedData, body, validationResult } = require('express-validator');
 
 const app = express()
@@ -34,6 +35,7 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('user', userSchema)
 
 app.use(express.json())
+app.use(cors())
 
 app.get('/', (req, res) => {
     res.render('home page')
